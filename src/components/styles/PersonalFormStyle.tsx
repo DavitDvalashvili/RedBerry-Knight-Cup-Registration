@@ -10,12 +10,17 @@ export const PersonalFormStyle = styled.form`
     border-bottom: solid 1px rgba(0, 0, 0, 0.13);
     padding: 8px 16px;
     position: relative;
+    display: flex;
+    justify-content: right;
+    align-items: center;
     p {
       color: #212529;
       font-family: Open Sans;
       font-size: 20px;
       font-weight: 400;
       line-height: 150%;
+      width: 200px;
+      margin-right: 560px;
       span {
         color: #dc3545;
         font-size: 16px;
@@ -28,7 +33,6 @@ export const PersonalFormStyle = styled.form`
       background-color: transparent;
       border: none;
       height: 30px;
-      width: 689px;
       color: #212529;
       font-family: Open Sans;
       font-size: 20px;
@@ -36,6 +40,18 @@ export const PersonalFormStyle = styled.form`
       line-height: 150%;
       :focus {
         outline: none;
+      }
+    }
+    .hideDate {
+      ::-webkit-datetime-edit-month-field,
+      ::-webkit-datetime-edit-day-field,
+      ::-webkit-datetime-edit-year-field,
+      ::-webkit-datetime-edit-text {
+        color: transparent;
+      }
+      ::-webkit-calendar-picker-indicator {
+        display: none;
+        -webkit-appearance: none;
       }
     }
   }
@@ -46,6 +62,41 @@ export const PersonalFormStyle = styled.form`
     }
     input {
       color: rgb(220, 53, 69);
+    }
+  }
+  .buttonWrapper {
+    margin-top: 88px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      font-family: Open Sans;
+      font-size: 20px;
+      font-weight: 400;
+      text-transform: capitalize;
+      padding: 13px 24px;
+      border-radius: 8px;
+      border: 1px solid #212529;
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+    .next {
+      background-color: #212529;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      gap: 12px;
+      border: 4px solid #fff;
+      :hover {
+        border-color: rgba(194, 165, 249, 0.8);
+      }
+    }
+    .back {
+      :hover {
+        border-color: rgba(194, 165, 249, 0.8);
+        background: rgba(185, 180, 195, 0.3);
+      }
     }
   }
 `;

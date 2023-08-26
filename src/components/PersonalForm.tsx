@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { PersonalFormStyle } from "./styles/PersonalFormStyle";
 import arrow from "../assets/arrow-right-circle.png";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import checkCircle from "../assets/ok.png";
 
 const PersonalForm = () => {
   const {
@@ -10,25 +12,23 @@ const PersonalForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<PersonalInputs>();
+  } = useForm<any>();
+
+  const [checkSubmition, setCheckSubmition] = useState(false);
+  const handleClick = () => {
+    setCheckSubmition(true);
+  };
 
   const onSubmit: SubmitHandler<PersonalInputs> = (data) => {
     console.log(data);
   };
 
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = (e: any) => {
-    const { value } = e.target;
-    if (value.length <= 10) {
-      // Restricting input to 10 characters (dd/mm/yyyy)
-      if (value.length === 2 || value.length === 5) {
-        // Automatically insert "/" at the appropriate positions
-        setInputValue(value + "/");
-      } else {
-        setInputValue(value);
-      }
-    }
+  const [focused, setFocused] = useState<boolean>(false);
+  const handleBlur = () => {
+    setFocused(false);
+  };
+  const handleFocus = () => {
+    setFocused(true);
   };
 
   return (
@@ -46,6 +46,9 @@ const PersonalForm = () => {
             maxLength: 50,
           })}
         />
+        {!errors.name && watch("name") && checkSubmition && (
+          <img src={checkCircle} alt="checkCircle" />
+        )}
       </div>
       <div className={!errors.email ? "inputWrapper" : "inputWrapper error"}>
         {!watch("email") && (
@@ -63,6 +66,9 @@ const PersonalForm = () => {
             },
           })}
         />
+        {!errors.email && watch("email") && checkSubmition && (
+          <img src={checkCircle} alt="checkCircle" />
+        )}
       </div>
       <div
         className={!errors.phoneNumber ? "inputWrapper" : "inputWrapper error"}
@@ -83,8 +89,10 @@ const PersonalForm = () => {
             },
           })}
         />
+        {!errors.phoneNumber && watch("phoneNumber") && checkSubmition && (
+          <img src={checkCircle} alt="checkCircle" />
+        )}
       </div>
-
       <div
         className={
           !errors.dateOfBirth
@@ -92,27 +100,30 @@ const PersonalForm = () => {
             : "inputWrapper dateWrapper error"
         }
       >
-        {!watch("dateOfBirth") && (
+        {!focused && !watch("dateOfBirth") && (
           <p>
             Date of birth <span>*</span>
           </p>
         )}
         <input
+          className={!focused && !watch("dateOfBirth") ? "hideDate" : ""}
+          type="date"
           {...register("dateOfBirth", {
             required: "Please enter valid date",
-            pattern: {
-              value: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
-              message: "Please enter valid date",
-            },
           })}
-          value={inputValue}
-          onChange={handleInputChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
         />
+        {!errors.dateOfBirth && watch("dateOfBirth") && checkSubmition && (
+          <img src={checkCircle} alt="checkCircle" />
+        )}
       </div>
 
       <div className="buttonWrapper">
-        <button>Back</button>
-        <button>
+        <Link to="/">
+          <button className="back">Back</button>
+        </Link>
+        <button className="next" onClick={handleClick}>
           <span>next</span>
           <img src={arrow} alt="arrowImage" />
         </button>

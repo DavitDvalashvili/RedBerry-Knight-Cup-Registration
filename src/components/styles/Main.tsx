@@ -45,6 +45,7 @@ const Main = styled.main`
         border: 4px solid #fd5334;
         text-decoration: none;
         cursor: pointer;
+        transition: all 0.5s ease;
         span {
           color: #fff;
           font-family: Open Sans;

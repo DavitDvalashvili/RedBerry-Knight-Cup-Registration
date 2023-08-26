@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const TextContainer = () => {
   let location = useLocation().pathname;
+
   return (
     <TextBox>
       {location == "/Personal" && <header>Start creating your account</header>}

@@ -2,44 +2,70 @@ import { PersonalInputs } from "../types";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { PersonalFormStyle } from "./styles/PersonalFormStyle";
 import arrow from "../assets/arrow-right-circle.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import checkCircle from "../assets/ok.png";
+import { ErrorContainer } from "./ErrorContainer";
 
 const PersonalForm = () => {
+  const [nameError, setNameError] = useState<boolean>(true);
+  const [emailError, setEmailError] = useState<boolean>(true);
+  const [numberError, setNumberError] = useState<boolean>(true);
+  const [dateError, setDateError] = useState<boolean>(true);
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<any>();
+  } = useForm<PersonalInputs>();
 
   const [checkSubmition, setCheckSubmition] = useState(false);
+
   const handleClick = () => {
     setCheckSubmition(true);
+    setNameError(true);
+    setDateError(true);
+    setEmailError(true);
+    setNumberError(true);
   };
 
   const onSubmit: SubmitHandler<PersonalInputs> = (data) => {
+    localStorage.setItem("userData", JSON.stringify(data));
     console.log(data);
   };
+
+  let [savedData, setSavedData] = useState<any>("");
+  useEffect(() => {
+    const savedUserData = localStorage.getItem("userData");
+    if (savedUserData) {
+      setSavedData(JSON.parse(savedUserData));
+    }
+  }, []);
 
   const [focused, setFocused] = useState<boolean>(false);
   const handleBlur = () => {
     setFocused(false);
   };
+
   const handleFocus = () => {
     setFocused(true);
   };
 
   return (
     <PersonalFormStyle onSubmit={handleSubmit(onSubmit)}>
-      <div className={!errors.name ? "inputWrapper" : "inputWrapper error"}>
-        {!watch("name") && (
+      <div
+        className={
+          !errors.name || savedData ? "inputWrapper" : "inputWrapper error"
+        }
+      >
+        {!watch("name") && !savedData && (
           <p>
             Name <span>*</span>
           </p>
         )}
         <input
+          defaultValue={savedData.name}
           {...register("name", {
             required: "Please enter valid name",
             minLength: 2,
@@ -50,13 +76,19 @@ const PersonalForm = () => {
           <img src={checkCircle} alt="checkCircle" />
         )}
       </div>
-      <div className={!errors.email ? "inputWrapper" : "inputWrapper error"}>
-        {!watch("email") && (
+
+      <div
+        className={
+          !errors.email || savedData ? "inputWrapper" : "inputWrapper error"
+        }
+      >
+        {!watch("email") && !savedData && (
           <p>
             Email address <span>*</span>
           </p>
         )}
         <input
+          value={savedData.email}
           {...register("email", {
             required: "Please enter valid email address",
             minLength: 5,
@@ -70,15 +102,21 @@ const PersonalForm = () => {
           <img src={checkCircle} alt="checkCircle" />
         )}
       </div>
+
       <div
-        className={!errors.phoneNumber ? "inputWrapper" : "inputWrapper error"}
+        className={
+          !errors.phoneNumber || savedData
+            ? "inputWrapper"
+            : "inputWrapper error"
+        }
       >
-        {!watch("phoneNumber") && (
+        {!watch("phoneNumber") && !savedData && (
           <p>
             Phone number <span>*</span>
           </p>
         )}
         <input
+          value={savedData.phoneNumber}
           {...register("phoneNumber", {
             required: "Please enter valid phone number",
             minLength: 9,
@@ -93,20 +131,24 @@ const PersonalForm = () => {
           <img src={checkCircle} alt="checkCircle" />
         )}
       </div>
+
       <div
         className={
-          !errors.dateOfBirth
+          !errors.dateOfBirth || savedData
             ? "inputWrapper dateWrapper"
             : "inputWrapper dateWrapper error"
         }
       >
-        {!focused && !watch("dateOfBirth") && (
+        {!focused && !watch("dateOfBirth") && !savedData && (
           <p>
             Date of birth <span>*</span>
           </p>
         )}
         <input
-          className={!focused && !watch("dateOfBirth") ? "hideDate" : ""}
+          value={savedData.dateOfBirth}
+          className={
+            !focused && !watch("dateOfBirth") && !savedData ? "hideDate" : ""
+          }
           type="date"
           {...register("dateOfBirth", {
             required: "Please enter valid date",
@@ -128,6 +170,18 @@ const PersonalForm = () => {
           <img src={arrow} alt="arrowImage" />
         </button>
       </div>
+
+      <ErrorContainer
+        errors={errors}
+        nameError={nameError}
+        setNameError={setNameError}
+        emailError={emailError}
+        setEmailError={setEmailError}
+        numberError={numberError}
+        setNumberError={setNumberError}
+        dateError={dateError}
+        setDateError={setDateError}
+      />
     </PersonalFormStyle>
   );
 };

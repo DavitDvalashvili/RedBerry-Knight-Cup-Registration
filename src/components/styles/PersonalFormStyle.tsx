@@ -54,6 +54,10 @@ export const PersonalFormStyle = styled.form`
         -webkit-appearance: none;
       }
     }
+    :hover {
+      color: rgba(33, 37, 41, 0.5);
+      background-color: rgba(33, 37, 41, 0.13);
+    }
   }
   .error {
     background-color: rgba(220, 53, 69, 0.13);

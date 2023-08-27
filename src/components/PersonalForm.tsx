@@ -2,8 +2,8 @@ import { PersonalInputs } from "../types";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { PersonalFormStyle } from "./styles/PersonalFormStyle";
 import arrow from "../assets/arrow-right-circle.png";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import checkCircle from "../assets/ok.png";
 import { ErrorContainer } from "./ErrorContainer";
 
@@ -30,42 +30,22 @@ const PersonalForm = () => {
     setNumberError(true);
   };
 
-  const onSubmit: SubmitHandler<PersonalInputs> = (data) => {
-    localStorage.setItem("userData", JSON.stringify(data));
-    console.log(data);
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<PersonalInputs> = () => {
+    navigate("/Experience");
   };
-
-  let [savedData, setSavedData] = useState<any>("");
-  useEffect(() => {
-    const savedUserData = localStorage.getItem("userData");
-    if (savedUserData) {
-      setSavedData(JSON.parse(savedUserData));
-    }
-  }, []);
 
   const [focused, setFocused] = useState<boolean>(false);
-  const handleBlur = () => {
-    setFocused(false);
-  };
-
-  const handleFocus = () => {
-    setFocused(true);
-  };
 
   return (
     <PersonalFormStyle onSubmit={handleSubmit(onSubmit)}>
-      <div
-        className={
-          !errors.name || savedData ? "inputWrapper" : "inputWrapper error"
-        }
-      >
-        {!watch("name") && !savedData && (
+      <div className={!errors.name ? "inputWrapper" : "inputWrapper error"}>
+        {!watch("name") && (
           <p>
             Name <span>*</span>
           </p>
         )}
         <input
-          defaultValue={savedData.name}
           {...register("name", {
             required: "Please enter valid name",
             minLength: 2,
@@ -77,18 +57,13 @@ const PersonalForm = () => {
         )}
       </div>
 
-      <div
-        className={
-          !errors.email || savedData ? "inputWrapper" : "inputWrapper error"
-        }
-      >
-        {!watch("email") && !savedData && (
+      <div className={!errors.email ? "inputWrapper" : "inputWrapper error"}>
+        {!watch("email") && (
           <p>
             Email address <span>*</span>
           </p>
         )}
         <input
-          value={savedData.email}
           {...register("email", {
             required: "Please enter valid email address",
             minLength: 5,
@@ -104,19 +79,14 @@ const PersonalForm = () => {
       </div>
 
       <div
-        className={
-          !errors.phoneNumber || savedData
-            ? "inputWrapper"
-            : "inputWrapper error"
-        }
+        className={!errors.phoneNumber ? "inputWrapper" : "inputWrapper error"}
       >
-        {!watch("phoneNumber") && !savedData && (
+        {!watch("phoneNumber") && (
           <p>
             Phone number <span>*</span>
           </p>
         )}
         <input
-          value={savedData.phoneNumber}
           {...register("phoneNumber", {
             required: "Please enter valid phone number",
             minLength: 9,
@@ -134,27 +104,28 @@ const PersonalForm = () => {
 
       <div
         className={
-          !errors.dateOfBirth || savedData
+          !errors.dateOfBirth
             ? "inputWrapper dateWrapper"
             : "inputWrapper dateWrapper error"
         }
       >
-        {!focused && !watch("dateOfBirth") && !savedData && (
+        {!focused && !watch("dateOfBirth") && (
           <p>
             Date of birth <span>*</span>
           </p>
         )}
         <input
-          value={savedData.dateOfBirth}
-          className={
-            !focused && !watch("dateOfBirth") && !savedData ? "hideDate" : ""
-          }
+          className={!focused && !watch("dateOfBirth") ? "hideDate" : ""}
           type="date"
           {...register("dateOfBirth", {
             required: "Please enter valid date",
           })}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
+          onBlur={() => {
+            setFocused(false);
+          }}
+          onFocus={() => {
+            setFocused(true);
+          }}
         />
         {!errors.dateOfBirth && watch("dateOfBirth") && checkSubmition && (
           <img src={checkCircle} alt="checkCircle" />

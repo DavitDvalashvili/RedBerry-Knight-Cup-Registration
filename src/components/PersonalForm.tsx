@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import checkCircle from "../assets/ok.png";
 import { ErrorContainer } from "./ErrorContainer";
+import { ButttonWrapper } from "./styles/PersonalFormStyle";
 
 const PersonalForm = () => {
   const [nameError, setNameError] = useState<boolean>(true);
@@ -132,7 +133,7 @@ const PersonalForm = () => {
         )}
       </div>
 
-      <div className="buttonWrapper">
+      <ButttonWrapper>
         <Link to="/">
           <button className="back">Back</button>
         </Link>
@@ -140,7 +141,7 @@ const PersonalForm = () => {
           <span>next</span>
           <img src={arrow} alt="arrowImage" />
         </button>
-      </div>
+      </ButttonWrapper>
 
       <ErrorContainer
         errors={errors}

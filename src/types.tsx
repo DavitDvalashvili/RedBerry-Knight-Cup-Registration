@@ -22,3 +22,13 @@ export interface errorType {
   dateError: boolean;
   setDateError: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+enum ExperienceType {
+  Beginner = "Beginner",
+  Intermediate = "Intermediate",
+  Professional = "Professional",
+}
+
+export interface ExperienceInputs {
+  experience: ExperienceType;
+}

@@ -68,39 +68,40 @@ export const PersonalFormStyle = styled.form`
       color: rgb(220, 53, 69);
     }
   }
-  .buttonWrapper {
-    margin-top: 88px;
+`;
+
+export const ButttonWrapper = styled.div`
+  margin-top: 88px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    font-family: Open Sans;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: capitalize;
+    padding: 13px 24px;
+    border-radius: 8px;
+    border: 1px solid #212529;
+    cursor: pointer;
+    transition: all 0.5s ease;
+  }
+  .next {
+    background-color: #212529;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    button {
-      font-family: Open Sans;
-      font-size: 20px;
-      font-weight: 400;
-      text-transform: capitalize;
-      padding: 13px 24px;
-      border-radius: 8px;
-      border: 1px solid #212529;
-      cursor: pointer;
-      transition: all 0.5s ease;
+    color: #fff;
+    gap: 12px;
+    border: 4px solid #fff;
+    :hover {
+      border-color: rgba(194, 165, 249, 0.8);
     }
-    .next {
-      background-color: #212529;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      gap: 12px;
-      border: 4px solid #fff;
-      :hover {
-        border-color: rgba(194, 165, 249, 0.8);
-      }
-    }
-    .back {
-      :hover {
-        border-color: rgba(194, 165, 249, 0.8);
-        background: rgba(185, 180, 195, 0.3);
-      }
+  }
+  .back {
+    :hover {
+      border-color: rgba(194, 165, 249, 0.8);
+      background: rgba(185, 180, 195, 0.3);
     }
   }
 `;

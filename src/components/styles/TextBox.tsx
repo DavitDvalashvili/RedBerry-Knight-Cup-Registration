@@ -37,8 +37,13 @@ const TextBox = styled.div`
         font-size: 18px;
         font-weight: 700;
       }
-      .experience {
-        background-color: #f5f5f5;
+      .Completed {
+        background-color: #e9faf1;
+        width: 40px;
+        height: 40px;
+      }
+      .active {
+        background-color: #e9faf1;
       }
       .divider {
         width: 174px;

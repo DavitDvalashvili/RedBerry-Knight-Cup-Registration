@@ -2,6 +2,7 @@ import TextBox from "./styles/TextBox";
 import PersonalForm from "./PersonalForm";
 import ExperienceForm from "./ExperienceForm";
 import { useLocation } from "react-router-dom";
+import doubleCeck from "../assets/okok.png";
 
 const TextContainer = () => {
   let location = useLocation().pathname;
@@ -15,9 +16,28 @@ const TextContainer = () => {
 
       <div className="navigation">
         <div className="number">
-          <div className="personal">1</div>
+          {location == "/Personal" && (
+            <div
+              className={
+                location == "/Personal" ? "active personal" : "personal"
+              }
+            >
+              1
+            </div>
+          )}
+          {location == "/Experience" && (
+            <div className="personal Completed">
+              <img src={doubleCeck} alt="doubleCheck" />
+            </div>
+          )}
           <div className="divider"></div>
-          <div className="experience">2</div>
+          <div
+            className={
+              location == "/Experience" ? "active experience" : "experience"
+            }
+          >
+            2
+          </div>
         </div>
         <div className="name">
           <p>Personal information</p>

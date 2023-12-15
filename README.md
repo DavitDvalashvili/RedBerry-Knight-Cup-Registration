@@ -47,7 +47,7 @@ Resolution is static 1920x1080px
 1. First of all you need to clone app repository from github:
 
 ```
-git clone https://github.com/DavitDvalashvili/Photosnap-multi-page-website.git
+git clone git@github.com:DavitDvalashvili/RedBerry-Knight-Cup-Registration.git
 ```
 
 2. Next step requires install all the dependencies.
